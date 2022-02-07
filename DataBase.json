@@ -1,0 +1,41 @@
+{
+  "users": [
+    {
+      "email": "first.user@mail.com",
+      "password": "$2a$10$QjxzE4T6FVB/iisw5Es8auHAA7l7YpmrIwDGZrGknyMNc59KJ4I4i",
+      "id": 1
+    },
+    {
+      "email": "second.user@mail.com",
+      "password": "$2a$10$S5aWCVHgaw8.ne7nbEy38ONAIIsWBoyUwl3jgHNIDiWRjRGUo.msi",
+      "id": 2
+    },
+    {
+      "email": "second.user2@mail.com",
+      "password": "$2a$10$IxzYxtVHcYZDqT110AeEC.sdP69oPq.0v3ifr/qXHnscz0W82zuY6",
+      "id": 3
+    }
+  ],
+  "users_data": [
+    {
+      "firstName": "Second",
+      "lastName": "User",
+      "dateOfBirth": "2001-05-10",
+      "friends": [],
+      "posts": [],
+      "images": [],
+      "online": false,
+      "id": 3
+    },
+    {
+      "firstName": "Second",
+      "lastName": "User",
+      "dateOfBirth": "2001-05-10",
+      "friends": [],
+      "posts": [],
+      "images": [],
+      "online": true,
+      "id": 4
+    }
+  ]
+}

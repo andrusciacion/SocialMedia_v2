@@ -1,0 +1,130 @@
+.Parent {
+  width: 100vw;
+  height: 100vh;
+  background: linear-gradient(
+    45deg,
+    rgba(0, 0, 255, 0.692),
+    rgba(128, 0, 128, 0.692) 70%
+  );
+  display: flex;
+  justify-content: space-around;
+  overflow: clip;
+}
+
+.Parent img {
+  display: flex;
+  width: 50%;
+}
+
+.LoginBox {
+  padding-top: 10px;
+  margin-top: 70px;
+  margin-left: 100px;
+  min-width: 350px;
+  height: 350px;
+  min-height: 350px;
+  background-color: rgba(255, 255, 255, 0.568);
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  border-radius: 20px;
+  box-shadow: 0px 0px 8px 10px rgba(34, 60, 80, 0.4);
+}
+
+.InputData {
+  display: flex;
+  flex-direction: column;
+  width: 80%;
+}
+
+.LoginBox h1 {
+  margin-bottom: 0;
+  color: rgb(6, 21, 54);
+}
+
+.LoginBox label {
+  font-size: 22px;
+  font-weight: bold;
+  margin-top: 10px;
+  margin-bottom: 5px;
+  color: rgb(6, 21, 54);
+  padding-left: 1px;
+}
+
+.LoginBox input {
+  font-size: 16px;
+  padding: 5px;
+  padding-left: 10px;
+  border: none;
+  border-radius: 5px;
+  box-shadow: 0px 0px 8px 5px rgba(34, 60, 80, 0.3);
+}
+
+.LoginBox input:focus {
+  outline: none;
+  box-shadow: 0px 0px 8px 5px rgba(34, 60, 80, 0.1);
+}
+
+.Button {
+  margin-top: 20px;
+  font-size: 20px;
+  border: none;
+  border-radius: 10px;
+  padding: 5px;
+  padding-inline: 40px;
+  font-weight: bold;
+  box-shadow: 0px 0px 8px 6px rgba(34, 60, 80, 0.3);
+  cursor: pointer;
+  height: 40px;
+  background-color: rgba(38, 75, 175, 0.747);
+  color: white;
+  margin-bottom: 15px;
+}
+
+.Button:active {
+  box-shadow: none;
+}
+
+.LoginBox a {
+  color: white;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.LoginBox a:hover {
+  color: rgba(255, 255, 255, 0.562);
+}
+
+.LoginBox p {
+  margin-block: 0;
+  margin-top: 5px;
+  font-weight: bold;
+  border-top-style: solid;
+  border-top-width: 1.5px;
+  border-top-color: purple;
+  width: 90%;
+  text-align: center;
+}
+
+.LoginBox .ErrorMessage {
+  padding-top: 5px;
+  align-self: center;
+  border: none;
+  font-weight: normal;
+  color: #ff0033;
+  text-shadow: rgba(255, 121, 121, 0.747) 1px 0 10px;
+}
+
+@media (max-width: 900px) {
+  .Parent {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .LoginBox {
+    display: flex;
+    min-width: 300px;
+    margin: 0;
+    margin-top: 70px;
+  }
+}
