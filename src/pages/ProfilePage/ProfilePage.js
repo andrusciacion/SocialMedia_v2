@@ -14,54 +14,31 @@ const URL_REQUEST = 'http://localhost:3004/';
 export default function ProfilePage() {
   const [user, setUser] = useState({});
   const [showModal, setShowModal] = useState(false);
-  const [posts, setPosts] = useState([]);
 
   let location = useLocation();
   const navigation = useNavigate();
 
   useEffect(() => {
-    getFriend(location.state);
+    getData();
   }, []);
 
-  useEffect(() => {
-    getPosts();
-  }, [user]);
-
-  const getPosts = async () => {
-    setPosts([]);
-    user.posts.forEach(async () => {
-      await fetch(URL_REQUEST + `users_data/${user.id}`)
-        .then((response) => response.json())
-        .then((data) => setPosts(data.posts.reverse()));
+  const getData = () => {
+    const getUserData = fetch(
+      URL_REQUEST + `users_data/${location.state}`
+    ).then((response) => response.json());
+    Promise.all([getUserData]).then(([user]) => {
+      setUser({ ...user, posts: user.posts.reverse() });
     });
-  };
-
-  const getFriend = (friend) => {
-    if (!isNaN(friend)) {
-      getUser(friend);
-    }
-  };
-
-  const getUser = async (friendID) => {
-    let id = localStorage.getItem('CurrentUserID');
-    if (!isNaN(friendID)) id = friendID;
-    await fetch(URL_REQUEST + `users_data/${id}`, {
-      method: 'GET',
-    })
-      .then((response) => response.json())
-      .then((data) => setUser(data))
-      .then(() => getPosts());
   };
 
   const closeModal = () => {
     setShowModal((prevState) => !prevState);
-    getFriend(user);
   };
 
-  const sendPost = async (text) => {
+  const sendPost = (text) => {
     let posts = [...user.posts, { post: text, dateTime: getCurrentTime() }];
-    let newUser = { ...user, posts: posts };
-    await fetch(URL_REQUEST + `users_data/${user.id}`, {
+    let newUser = { ...user, posts: posts.reverse() };
+    fetch(URL_REQUEST + `users_data/${user.id}`, {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
@@ -86,30 +63,13 @@ export default function ProfilePage() {
     return dateAndTime;
   };
 
-  const setUserStatus = async (status) => {
-    fetch(URL_REQUEST + `users_data/${this.state.user.id}`, {
-      method: 'PUT',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ ...this.state.user, online: status }),
-    });
-  };
-
-  const logOut = () => {
-    setUserStatus(false, user).then(() => {
-      localStorage.clear();
-      navigation('/', { replace: true });
-    });
-  };
-
-  const deletePost = async (position) => {
+  const deletePost = (position) => {
     let postID = user.posts.length - 1 - position;
     let posts = [...user.posts];
     if (posts.length === 1) posts = [];
     posts.splice(postID, 1);
     let newUser = { ...user, posts: posts };
-    await fetch(URL_REQUEST + `users_data/${user.id}`, {
+    fetch(URL_REQUEST + `users_data/${user.id}`, {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
@@ -118,7 +78,23 @@ export default function ProfilePage() {
     }).then(() => setUser(newUser));
   };
 
-  const deleteFriend = () => {};
+  const setUserStatus = (status) => {
+    fetch(URL_REQUEST + `users_data/${location.state}`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ ...user, online: status }),
+    });
+  };
+
+  const logOut = () => {
+    Promise.all([setUserStatus(false)]).then(() => {
+      localStorage.clear();
+      document.cookie = false;
+      navigation('/', { replace: true });
+    });
+  };
 
   return (
     <Scrollbars style={{ width: '100vw', height: '100vh' }}>
@@ -130,27 +106,6 @@ export default function ProfilePage() {
           sendPost={(text) => sendPost(text)}
         />
         <div className={styles.WelcomeSection}>
-          {/* <img className={styles.BackgroundImage} src={Background} alt='' /> */}
-          {/* {user.id != localStorage.getItem('CurrentUserID') && (
-            <button
-              style={{
-                position: 'absolute',
-                right: 0,
-                marginRight: 50,
-                marginTop: 15,
-                padding: 5,
-                fontWeight: 'bold',
-                borderRadius: 10,
-                border: 'none',
-                boxShadow: '0px 0px 8px 3px rgba(34, 60, 80, 0.5)',
-                backgroundColor: 'rgba(255, 0,0,0.8)',
-                color: 'white',
-              }}
-              onClick={deleteFriend}
-            >
-              Delete from friends
-            </button>
-          )} */}
           <img
             className={styles.ProfileImage}
             src={
@@ -161,8 +116,9 @@ export default function ProfilePage() {
             alt=''
           />
         </div>
+
         <div className={styles.UserName}>
-          {user.firstName + ' ' + user.lastName}
+          {user.firstName}&nbsp;{user.lastName}
         </div>
 
         <div className={styles.PostsArea}>
@@ -202,6 +158,7 @@ export default function ProfilePage() {
                   textDecoration: 'none',
                   color: 'black',
                 }}
+                state={user}
               >
                 <MdPhotoSizeSelectActual
                   style={{
@@ -233,7 +190,7 @@ export default function ProfilePage() {
               Recent posts
             </h3>
             <Scrollbars style={{ width: '100%', height: '80%' }}>
-              {posts.map((item, key) => (
+              {user.posts?.map((item, key) => (
                 <div
                   key={key}
                   style={{
@@ -266,7 +223,7 @@ export default function ProfilePage() {
                   />
                 </div>
               ))}
-              {posts.length === 0 && (
+              {user.posts?.length === 0 && (
                 <p className={styles.NoPostsText}>There are no posts</p>
               )}
             </Scrollbars>

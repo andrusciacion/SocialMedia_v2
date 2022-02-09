@@ -3,7 +3,7 @@ import styles from './PhotosPage.module.css';
 import Navigation from '../../components/NavigationBar/NavigationBar';
 import { Scrollbars } from 'react-custom-scrollbars-2';
 import ZoomImages from '../../components/Zoom/Zoom';
-import { Navigate } from 'react-router-dom';
+import { Navigate, useLocation } from 'react-router-dom';
 
 const URL = 'http://localhost:3004/users_data/';
 
@@ -13,12 +13,14 @@ export default function PhotosPage(props) {
   const [imageIndex, setImageIndex] = useState(0);
   const [logOut, setLogOut] = useState(false);
 
+  let location = useLocation();
+
   useEffect(() => {
     getUserData();
   }, [props]);
 
-  const getUserData = async () => {
-    await fetch(URL + `${localStorage.getItem('CurrentUserID')}`, {
+  const getUserData = () => {
+    fetch(URL + `${location.state.id}`, {
       method: 'GET',
     })
       .then((response) => response.json())
@@ -60,6 +62,9 @@ export default function PhotosPage(props) {
       <Navigation logout={() => setLogOut(true)} />
       <div className={styles.Parent}>
         <div className={styles.Title}>Image Gallery</div>
+        {user.images?.length === 0 && (
+          <div className={styles.noPhotos}>There are no images</div>
+        )}
         <Scrollbars>
           <div className={styles.ImageGallery}>
             {user !== '' &&

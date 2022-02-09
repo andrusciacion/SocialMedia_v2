@@ -20,78 +20,57 @@ export default function HomePage() {
     newPosts: [],
     postExist: false,
   });
+  const [onlineFriends, setOnlineFriends] = useState([]);
   const [friends, setFriends] = useState([]);
   const [selectedImage, setSelectedImage] = useState('');
-  const [update, setUpdate] = useState('');
   const [show, setShow] = useState(false);
   const [allUsers, setAllUsers] = useState([]);
 
   const navigation = useNavigate();
 
   useEffect(() => {
-    getUser();
+    getUserData();
   }, []);
 
-  useEffect(() => {
-    getUser();
-  }, [selectedImage, show]);
+  // useEffect(() => {
+  //   getUser();
+  // }, [selectedImage, show]);
 
-  useEffect(() => {
-    getOnlineUsers().then(() => getUserFriendsPosts());
-  }, [user]);
-
-  const getUser = async () => {
-    await fetch(
-      URL_REQUEST + `users_data/${localStorage.getItem('CurrentUserID')}`,
-      {
-        method: 'GET',
-      }
-    )
-      .then((response) => response.json())
-      .then((data) => {
-        setUser(data);
-        setUserStatus(true, data);
-      });
-  };
-
-  const getUserFriendsPosts = async () => {
+  const getUserData = () => {
+    resetState();
+    let userData = {};
     let posts = [];
-    user.friends.forEach(async (item, index) => {
-      await fetch(URL_REQUEST + `users_data/${item}`)
-        .then((response) => response.json())
-        .then((data) => {
-          let post = {
-            posts: data.posts,
-            firstName: data.firstName,
-            lastName: data.lastName,
-            image: data.images[0],
-          };
-          posts.push(post);
-        });
-      if (index === user.friends.length - 1) {
-        setPosts({ friendsPosts: sortPosts(posts) });
-      }
-    });
-    if (user.friends.length === 0) setPosts({ friendsPosts: sortPosts(posts) });
+    let id = localStorage.getItem('CurrentUserID');
+    Promise.all([setUserStatus(true, id)])
+      .then(([user]) => {
+        setUser(user);
+        Object.assign(userData, user);
+      })
+      .then(() =>
+        Promise.all([getUserFriendsData(userData)]).then(([data]) =>
+          data.map((friendData) =>
+            Promise.all([friendData])
+              .then(([data]) => {
+                posts.push(data);
+                setFriends((prevState) => [...prevState, data]);
+                if (data.online)
+                  setOnlineFriends((prevState) => [...prevState, data]);
+              })
+              .then(() => setPosts({ friendsPosts: sortPosts(posts) }))
+          )
+        )
+      );
   };
 
-  const getOnlineUsers = async () => {
-    let friends = [];
-    user.friends.forEach(async (item) => {
-      await fetch(URL_REQUEST + `users_data/${item}`)
-        .then((response) => response.json())
-        .then((data) => {
-          if (data.online) friends.push(data.id);
-        });
-    });
-    setFriends(friends);
-  };
-
-  const getNewPosts = () => {
-    setPosts({ friendsPosts: sortPosts(posts.newPosts), postExist: false });
-  };
+  const getUserFriendsData = (user) =>
+    user.friends.map((item) =>
+      fetch(URL_REQUEST + `users_data/${item}`).then((response) =>
+        response.json()
+      )
+    );
 
   const sortPosts = (posts) => {
+    console.log(posts);
     let newArray = [];
     posts.map((item) => {
       item.posts.forEach((second) =>
@@ -100,7 +79,7 @@ export default function HomePage() {
           dateTime: second.dateTime,
           firstName: item.firstName,
           lastName: item.lastName,
-          image: item.image,
+          image: item.images[item.images.length - 1],
         })
       );
     });
@@ -110,56 +89,21 @@ export default function HomePage() {
     return newArray;
   };
 
-  const checkForNewData = () => {
-    getOnlineUsers();
-    let newPosts = [];
-    user.friends.forEach(async (item, index) => {
-      await fetch(URL_REQUEST + `users_data/${item.id}`)
-        .then((response) => response.json())
-        .then((data) => {
-          let post = {
-            posts: data.posts,
-            firstName: data.firstName,
-            lastName: data.lastName,
-            image: data.images[0],
-          };
-          newPosts.push(post);
-        });
-      if (index === user.friends.length - 1) {
-        comparePosts(newPosts);
-      }
-    });
-  };
-
-  const comparePosts = (second) => {
-    let oldPosts = posts.friendsPosts.length;
-    let newPosts = sortPosts(second).length;
-
-    if (oldPosts !== newPosts) {
-      this.setState({ postExist: true, newPosts: second });
-      setPosts({ postExist: true, newPosts: second });
-    }
-    if (posts.postExist) clearInterval(update);
-  };
-
-  const setUserStatus = async (status, user) => {
-    fetch(URL_REQUEST + `users_data/${user.id}`, {
-      method: 'PUT',
+  const setUserStatus = (status, id) =>
+    fetch(URL_REQUEST + `users_data/${id}`, {
+      method: 'PATCH',
       headers: {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        ...user,
         online: status,
       }),
-    });
-  };
+    }).then((response) => response.json());
 
-  const setImage = async (image) => {
-    setSelectedImage(image);
+  const setImage = (image) => {
     let imagesArray = [...user.images];
     imagesArray.unshift(image);
-    await fetch(URL_REQUEST + `users_data/${user.id}`, {
+    fetch(URL_REQUEST + `users_data/${user.id}`, {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
@@ -169,10 +113,11 @@ export default function HomePage() {
         images: imagesArray,
       }),
     });
+    getUserData();
   };
 
-  const showModal = async () => {
-    await fetch(URL_REQUEST + 'users_data', {
+  const showModal = () => {
+    fetch(URL_REQUEST + 'users_data', {
       method: 'GET',
     })
       .then((response) => response.json())
@@ -182,14 +127,21 @@ export default function HomePage() {
 
   const closeModal = () => {
     setShow((prevState) => !prevState);
+    getUserData();
   };
 
   const logOut = () => {
-    setUserStatus(false, user).then(() => {
+    setUserStatus(false, user.id).then(() => {
       localStorage.clear();
       document.cookie = false;
       navigation('/', { replace: true });
     });
+  };
+
+  const resetState = () => {
+    setUser({});
+    setFriends([]);
+    setOnlineFriends([]);
   };
 
   return (
@@ -216,7 +168,6 @@ export default function HomePage() {
             boxShadow: '0px 0px 5px 8px rgba(34, 60, 80, 0.2)',
             visibility: posts.postExist ? 'visible' : 'hidden',
           }}
-          onClick={getNewPosts}
         >
           New posts...
         </button>
@@ -236,11 +187,11 @@ export default function HomePage() {
           </div>
           <div>
             <Link to='/profile' state={user.id} className={styles.UserName}>
-              {user.firstName + ' ' + user.lastName}
+              {user.firstName}&nbsp;{user.lastName}
             </Link>
           </div>
           <div className={styles.ProfileButtons}>
-            <Link to='/photos' className={styles.Buttons}>
+            <Link to='/photos' className={styles.Buttons} state={user}>
               <MdPhotoSizeSelectActual
                 style={{ color: 'black', marginRight: 5 }}
               />
@@ -281,19 +232,19 @@ export default function HomePage() {
           <div className={styles.Friends}>
             <Scrollbars>
               <div className={styles.ListFriends}>
-                {user.friends &&
-                  user.friends.map((item, key) => (
+                {friends &&
+                  friends.map((item, key) => (
                     <Link
                       to='/profile'
                       style={{ textDecoration: 'none' }}
-                      state={item}
+                      state={item.id}
                       key={key}
                     >
                       <Friends user={{ item }} />
                     </Link>
                   ))}
-                {user.friends === undefined ||
-                  (user.friends.length === 0 && (
+                {friends === undefined ||
+                  (friends.length === 0 && (
                     <p className={styles.NoFriends}>No friends</p>
                   ))}
               </div>
@@ -340,18 +291,24 @@ export default function HomePage() {
           <h3 style={{ marginLeft: 20, color: 'black' }}>Online</h3>
           <div style={{ height: 330 }} className={styles.Friends}>
             <div className={styles.ListFriends}>
-              {friends &&
-                friends.map((item, key) => (
-                  <Friends
-                    key={key}
-                    user={{
-                      item,
-                    }}
-                    display={true}
-                  />
+              {onlineFriends &&
+                onlineFriends.map((item, key) => (
+                  <Link
+                    to='/profile'
+                    style={{ textDecoration: 'none' }}
+                    state={item.id}
+                  >
+                    <Friends
+                      key={key}
+                      user={{
+                        item,
+                      }}
+                      display={true}
+                    />
+                  </Link>
                 ))}
-              {friends === undefined ||
-                (friends.length === 0 && (
+              {onlineFriends === undefined ||
+                (onlineFriends.length === 0 && (
                   <p className={styles.NoFriendsText}>No friends online</p>
                 ))}
             </div>
