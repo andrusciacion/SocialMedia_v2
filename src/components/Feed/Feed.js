@@ -7,6 +7,7 @@ export default function Feed(props) {
   const [userImage, setUserImage] = useState(NoImage);
 
   useEffect(() => {
+    console.log(props);
     setRows(props.post.split(/\r\n|\r|\n/).length);
     props.user.image !== undefined
       ? setUserImage(props.user.image)

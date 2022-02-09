@@ -23,18 +23,15 @@ export default function ModalBox(props) {
     let friend = false;
     setNameUser(input);
     if (input.length > 2) {
-      for (let item in users) {
-        if (
-          `${users[item].firstName}${users[item].lastName}`
-            .toLowerCase()
-            .indexOf(input.toLowerCase().replace(/\s/g, '')) > -1
-        ) {
-          props.user.friends.indexOf(users[item].id) !== -1
-            ? (friend = true)
-            : (friend = false);
-        }
-        match.push({ user: users[item], friend: friend });
-      }
+      let regex = new RegExp(input.replace(/\s/g, '') + '.+$', 'i');
+      users.filter(function (user) {
+        userFriends.indexOf(user.id) !== -1
+          ? (friend = true)
+          : (friend = false);
+
+        `${user.firstName}${user.lastName}`.match(regex) !== null &&
+          match.push({ user: user, friend: friend });
+      });
 
       if (match.length > 0) {
         setMatchedUsers(match);
@@ -128,7 +125,15 @@ export default function ModalBox(props) {
                     }}
                   >
                     <div style={styles.user}>
-                      <img src={NoImage} alt='Image' style={styles.image} />
+                      <img
+                        src={
+                          item.user.images.length !== 0
+                            ? item.user.images[item.user.images.length - 1]
+                            : NoImage
+                        }
+                        alt='Image'
+                        style={styles.image}
+                      />
                       <p style={{ marginLeft: 20 }}>
                         {item.user.firstName}&nbsp;{item.user.lastName}
                       </p>
