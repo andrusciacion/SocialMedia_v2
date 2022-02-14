@@ -1,8 +1,10 @@
 import React from 'react';
-import styles from './ErrorPage.module.css';
-import Error from '../../images/404Error.svg';
 import { AiOutlineArrowLeft } from 'react-icons/ai';
 import { useNavigate } from 'react-router-dom';
+
+import Error from '../../images/404Error.svg';
+
+import styles from './ErrorPage.module.css';
 
 export default function ErrorPage() {
   let navigation = useNavigate();
@@ -10,12 +12,13 @@ export default function ErrorPage() {
   const goBack = () => {
     navigation(-1);
   };
+
   return (
     <div className={styles.Parent}>
-      <button onClick={goBack}>
-        <AiOutlineArrowLeft style={{ color: 'white' }} />
+      <button className={styles.button} onClick={goBack}>
+        <AiOutlineArrowLeft className={styles.icon} />
       </button>
-      <img src={Error} alt='' />
+      <img className={styles.image} src={Error} alt='' />
     </div>
   );
 }

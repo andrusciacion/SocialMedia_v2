@@ -1,7 +1,6 @@
 import React from 'react';
-import { Navigate } from 'react-router-dom';
 
-const URL_REQUEST = 'http://localhost:3004/';
+import { Navigate } from 'react-router-dom';
 
 export default function ProtectedRoute({ children }) {
   let userID = localStorage.getItem('CurrentUserID');

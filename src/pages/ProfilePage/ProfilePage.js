@@ -1,13 +1,15 @@
 import React, { useState, useEffect } from 'react';
-import styles from './ProfilePage.module.css';
 import Scrollbars from 'react-custom-scrollbars-2';
-import Navigation from '../../components/NavigationBar/NavigationBar';
-import PostModal from '../../components/PostModal';
-import NoImage from '../../images/NoImage.png';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { MdPhotoSizeSelectActual, MdDeleteSweep } from 'react-icons/md';
 import { AiFillPlusCircle } from 'react-icons/ai';
+
+import Navigation from '../../components/NavigationBar/NavigationBar';
+import PostModal from '../../components/Post/PostModal';
+import NoImage from '../../images/NoImage.png';
 import Feed from '../../components/Feed/Feed';
+
+import styles from './ProfilePage.module.css';
 
 const URL_REQUEST = 'http://localhost:3004/';
 
@@ -123,92 +125,32 @@ export default function ProfilePage() {
 
         <div className={styles.PostsArea}>
           <div className={styles.Posts}>
-            <div
-              style={{
-                display: 'flex',
-                alignItems: 'center',
-                marginBottom: -10,
-                width: '90%',
-                justifyContent: 'space-around',
-              }}
-            >
-              {user.id == localStorage.getItem('CurrentUserID') && (
-                <div style={{ display: 'flex' }}>
+            <div className={styles.postsHeader}>
+              {user.id === Number(localStorage.getItem('CurrentUserID')) && (
+                <div className={styles.addNewPostHeader}>
                   <AiFillPlusCircle
-                    style={{
-                      color: 'white',
-                      cursor: 'pointer',
-                      fontSize: 30,
-                      marginLeft: 20,
-                      marginTop: 10,
-                      marginRight: 10,
-                    }}
+                    className={styles.addPostsIcon}
                     onClick={() => setShowModal((prevState) => !prevState)}
                   />
-                  <h6 style={{ marginTop: 15 }}>Add new post</h6>
+                  <h6 className={styles.addPostTitle}>Add new post</h6>
                 </div>
               )}
-
-              <Link
-                className={styles.PhotosButton}
-                to='/photos'
-                style={{
-                  display: 'flex',
-                  alignItems: 'center',
-                  textDecoration: 'none',
-                  color: 'black',
-                }}
-                state={user}
-              >
-                <MdPhotoSizeSelectActual
-                  style={{
-                    color: 'white',
-                    cursor: 'pointer',
-                    fontSize: 30,
-                    marginLeft: 20,
-                    marginTop: 10,
-                    marginRight: 10,
-                  }}
-                />
-                <h6 style={{ marginTop: 20 }}>Photos</h6>
-              </Link>
+              <div className={styles.addNewPostHeader}>
+                <Link className={styles.PhotosButton} to='/photos' state={user}>
+                  <MdPhotoSizeSelectActual className={styles.photosIcon} />
+                  <h6 className={styles.photosTitle}>Photos</h6>
+                </Link>
+              </div>
             </div>
-            <hr
-              style={{
-                height: 3,
-                color: 'white',
-                width: '96%',
-                marginInline: 'auto',
-              }}
-            />
-            <h3
-              style={{
-                width: '100%',
-                textAlign: 'center',
-              }}
-            >
-              Recent posts
-            </h3>
-            <Scrollbars style={{ width: '100%', height: '80%' }}>
+            <hr className={styles.headerLine} />
+            <h3 className={styles.postsTitle}>Recent posts</h3>
+            <Scrollbars style={{ width: '100%', height: '100%' }}>
               {user.posts?.map((item, key) => (
-                <div
-                  key={key}
-                  style={{
-                    width: '80%',
-                    marginInline: 'auto',
-
-                    justifyContent: 'flex-end',
-                  }}
-                >
-                  {user.id == localStorage.getItem('CurrentUserID') && (
+                <div key={key} className={styles.postContainer}>
+                  {user.id ===
+                    Number(localStorage.getItem('CurrentUserID')) && (
                     <MdDeleteSweep
-                      style={{
-                        fontSize: 30,
-                        position: 'absolute',
-                        marginLeft: '69%',
-                        marginTop: 10,
-                        cursor: 'pointer',
-                      }}
+                      className={styles.deleteButton}
                       onClick={() => deletePost(key)}
                     />
                   )}
@@ -228,45 +170,31 @@ export default function ProfilePage() {
               )}
             </Scrollbars>
           </div>
-
           <div className={styles.PhotosContainer}>
-            <Link to='/photos' style={PhotosLinkStyle} state={user}>
-              Photos
-            </Link>
-            <hr
-              style={{
-                color: 'white',
-                height: 3,
-                marginTop: 9,
-                width: '95%',
-                marginInline: 'auto',
-              }}
-            />
-            <Scrollbars
-              style={{
-                height: '100%',
-              }}
-            >
+            <div className={styles.photosLinkButton}>
+              <Link
+                to='/photos'
+                className={styles.photosLinkStyle}
+                state={user}
+              >
+                Photos
+              </Link>
+            </div>
+            <hr className={styles.headerLine} />
+            <Scrollbars>
               <div className={styles.Photos}>
                 {user.images !== undefined &&
-                  user.images.map((image) => (
+                  user.images.map((image, key) => (
                     <img
+                      className={styles.image}
+                      key={key}
                       src={image}
                       alt='img'
-                      style={{
-                        boxShadow: '0px 0px 8px 5px rgba(34, 60, 80, 0.5)',
-                        borderRadius: 10,
-                      }}
                     />
                   ))}
               </div>
               {(user.images !== undefined && user.images.length) === 0 && (
-                <p
-                  className={styles.NoPostsText}
-                  style={{ marginInline: 'auto', display: 'flex' }}
-                >
-                  No photos
-                </p>
+                <p className={styles.NoPostsText}>No photos</p>
               )}
             </Scrollbars>
           </div>
@@ -275,16 +203,3 @@ export default function ProfilePage() {
     </Scrollbars>
   );
 }
-
-const PhotosLinkStyle = {
-  marginLeft: 20,
-  textDecoration: 'none',
-  color: 'black',
-  fontSize: 30,
-  width: '100%',
-  fontWeight: 'bold',
-  cursor: 'pointer',
-  borderRadius: 10,
-  textShadow: '2px 2px rgba(0,0,0,0.3)',
-  padding: '5px',
-};

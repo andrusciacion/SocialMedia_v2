@@ -1,63 +1,74 @@
-.Parent {
-  display: flex;
-  position: fixed;
-  align-items: center;
-  flex-direction: column;
-  width: 100vw;
-  height: 100vh;
-  background-color: rgba(0, 0, 0, 0.9);
-  z-index: 3;
-  cursor: default;
-}
-
-.Header {
-  width: 15%;
-  margin-top: 10px;
-  display: flex;
-  justify-content: center;
-  border-radius: 20px;
-  padding: 10px;
-  margin-block: 10px;
-  cursor: pointer;
-  transition: 1s;
-}
-
-.Header:hover {
-  transition: 0.5s;
-  background-color: rgba(255, 0, 0, 0.897);
-}
-
 .CustomCursor {
-  position: absolute;
-  border-radius: 50%;
   background: linear-gradient(
     45deg,
     rgba(0, 0, 255, 0.514),
     rgba(128, 0, 128, 0.5) 70%
   );
-  display: none;
-  width: 40px;
+  border-radius: 50%;
   cursor: none;
+  display: none;
+  position: absolute;
+  width: 40px;
+}
+
+.Header {
+  border-radius: 20px;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  margin-top: 10px;
+  margin-block: 10px;
+  padding: 10px;
+  transition: 1s;
+  width: 15%;
+}
+
+.Header:hover {
+  background-color: rgba(255, 0, 0, 0.897);
+  transition: 0.5s;
 }
 
 .ImageBox {
-  display: flex;
-  justify-content: center;
-  height: 85%;
-  width: 50%;
-  margin-block: auto;
   cursor: none;
+  display: flex;
+  height: 85%;
+  justify-content: center;
+  margin-block: auto;
   margin-bottom: 0;
+  width: 50%;
 }
 
 .ImageBox:hover .CustomCursor {
   display: flex;
 }
 
-.ImageBox img {
-  width: 98%;
-  height: 97%;
+.imageNumber {
+  color: white;
+  font-weight: bold;
+  margin-bottom: 20px;
+}
+
+.icons {
+  color: white;
+  font-size: 40px;
+}
+
+.Parent {
+  align-items: center;
+  background-color: rgba(0, 0, 0, 0.9);
+  cursor: default;
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  position: fixed;
+  width: 100vw;
+  z-index: 3;
+}
+
+.zoomedImage {
   box-shadow: 0px 0px 8px 5px rgba(255, 255, 255, 0.5);
   border-radius: 10px;
+  height: 97%;
   object-fit: cover;
+  width: 98%;
 }

@@ -1,13 +1,15 @@
 import React, { useEffect, useState } from 'react';
-import styles from './PhotosPage.module.css';
-import Navigation from '../../components/NavigationBar/NavigationBar';
 import { Scrollbars } from 'react-custom-scrollbars-2';
-import ZoomImages from '../../components/Zoom/Zoom';
 import { Navigate, useLocation } from 'react-router-dom';
+
+import Navigation from '../../components/NavigationBar/NavigationBar';
+import ZoomImages from '../../components/Zoom/Zoom';
+
+import styles from './PhotosPage.module.css';
 
 const URL = 'http://localhost:3004/users_data/';
 
-export default function PhotosPage(props) {
+export default function PhotosPage() {
   const [user, setUser] = useState('');
   const [zoom, setZoom] = useState(false);
   const [imageIndex, setImageIndex] = useState(0);
@@ -16,16 +18,11 @@ export default function PhotosPage(props) {
   let location = useLocation();
 
   useEffect(() => {
-    getUserData();
-  }, [props]);
+    Promise.all([getUserData()]).then(([data]) => setUser(data));
+  }, []);
 
-  const getUserData = () => {
-    fetch(URL + `${location.state.id}`, {
-      method: 'GET',
-    })
-      .then((response) => response.json())
-      .then((data) => setUser(data));
-  };
+  const getUserData = () =>
+    fetch(URL + `${location.state.id}`).then((response) => response.json());
 
   const zoomImage = (index) => {
     setImageIndex(index);
@@ -69,7 +66,13 @@ export default function PhotosPage(props) {
           <div className={styles.ImageGallery}>
             {user !== '' &&
               user.images.map((image, index) => (
-                <img src={image} onClick={() => zoomImage(index)} />
+                <img
+                  className={styles.image}
+                  key={index}
+                  src={image}
+                  alt=''
+                  onClick={() => zoomImage(index)}
+                />
               ))}
           </div>
         </Scrollbars>

@@ -1,6 +1,8 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
+
 import LoginImage from '../../images/LoginImage.svg';
+
 import styles from './LoginPage.module.css';
 
 const URL_REQUEST = 'http://localhost:3002/';
@@ -18,7 +20,7 @@ export default function LoginPage() {
     if (userID !== null && token !== 'false') {
       navigation('/home', { replace: true });
     }
-  }, []);
+  }, [navigation]);
 
   useEffect(() => {
     if (loggedUser.user?.id !== undefined) {
@@ -26,18 +28,20 @@ export default function LoginPage() {
       localStorage.setItem('CurrentUserID', loggedUser.user.id);
       navigation('/home', { replace: true });
     }
-  }, [loggedUser]);
+  }, [loggedUser, navigation]);
 
   const handleInput = (input) => {
     switch (input.target.name) {
       case 'email':
         setLogin((prevState) => ({ ...prevState, email: input.target.value }));
+        setErrMessage('err');
         break;
       case 'password':
         setLogin((prevState) => ({
           ...prevState,
           password: input.target.value,
         }));
+        setErrMessage('err');
         break;
       default:
         break;
@@ -68,40 +72,52 @@ export default function LoginPage() {
       );
   };
 
+  const handleKey = (event) => {
+    if (event.key === 'Enter') {
+      loginAction();
+    }
+  };
+
   return (
     <div className={styles.Parent}>
       <div className={styles.LoginBox}>
         <div className={styles.InputData}>
-          <label htmlFor='email'>Email</label>
+          <label className={styles.labels} htmlFor='email'>
+            Email
+          </label>
           <input
+            className={styles.inputs}
             type='text'
             name='email'
             placeholder='Email'
             onChange={handleInput}
+            onKeyPress={handleKey}
           />
-          <label htmlFor='password'>Password</label>
+          <label className={styles.labels} htmlFor='password'>
+            Password
+          </label>
           <input
+            className={styles.inputs}
             type='password'
             name='password'
             placeholder='Password'
             onChange={handleInput}
+            onKeyPress={handleKey}
           />
         </div>
-        <p
-          className={styles.ErrorMessage}
-          style={{
-            visibility: errMesage.length === 3 ? 'hidden' : 'visible',
-          }}
-        >
-          {errMesage}
-        </p>
+        {errMesage.length !== 3 && (
+          <p className={styles.ErrorMessage}>{errMesage}</p>
+        )}
+
         <button className={styles.Button} onClick={loginAction}>
           Log in
         </button>
-        <p>or</p>
-        <Link to='/register'>Create account</Link>
+        <p className={styles.paragraphText}>or</p>
+        <Link className={styles.link} to='/register'>
+          Create account
+        </Link>
       </div>
-      <img src={LoginImage} alt='' />
+      <img className={styles.image} src={LoginImage} alt='' />
     </div>
   );
 }

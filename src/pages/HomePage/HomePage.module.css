@@ -1,58 +1,166 @@
+.Buttons {
+  align-items: center;
+  background-color: transparent;
+  border: none;
+  color: black;
+  display: flex;
+  font-size: 24px;
+  text-decoration: none;
+}
+
+.Feed {
+  border: solid rgba(255, 255, 255, 0.5);
+  border-width: 0 3px 0 3px;
+  grid-area: 1 / 2 / 2 / 3;
+}
+
+.FriendsOnline {
+  color: white;
+  grid-area: 1 / 3 / 2 / 4;
+}
+
+.Friends {
+  height: 45%;
+}
+
+.friendsTitle {
+  color: black;
+  margin-left: 20px;
+  text-shadow: 2px 2px rgba(0, 0, 0, 0.2);
+}
+
+.friendsHeader {
+  display: flex;
+  justify-content: space-between;
+}
+
+.image {
+  box-shadow: 0px 12px 8px 0px rgba(34, 60, 80, 0.2);
+  border-radius: 50%;
+  display: flex;
+  flex-direction: column;
+  grid-area: 1 / 1 / 2 / 2;
+  height: 200px;
+  margin-inline: auto;
+  margin-top: 50px;
+  object-fit: cover;
+  width: 200px;
+}
+
+.link {
+  text-decoration: none;
+}
+
+.ListFriends {
+  margin-bottom: 100px;
+}
+
+.NewsFeed {
+  height: 82vh;
+  overflow-y: scroll;
+}
+
+.newPostsButton {
+  box-shadow: 0px 0px 5px 8px rgba(34, 60, 80, 0.2);
+  background-color: white;
+  border-radius: 10px;
+  border: none;
+  font-weight: bold;
+  left: calc(50% - 75px);
+  margin-top: 60;
+  padding: 5px;
+  position: absolute;
+  width: 150px;
+}
+
+.NoFriends {
+  background-color: rgba(255, 255, 255, 0.418);
+  border-radius: 10px;
+  display: flex;
+  font-weight: bold;
+  justify-content: center;
+  margin-inline: auto;
+  margin-top: 20%;
+  width: 60%;
+}
+
+.NoPostsText {
+  align-items: center;
+  background-color: rgba(255, 255, 255, 0.418);
+  border-radius: 10px;
+  display: flex;
+  font-weight: bold;
+  font-size: 22px;
+  height: 40px;
+  justify-content: center;
+  margin-inline: auto;
+  margin-top: 30%;
+  text-align: center;
+  width: 60%;
+}
+
+.NoFriendsText {
+  background-color: rgba(255, 255, 255, 0.418);
+  border-radius: 10px;
+  color: black;
+  font-weight: bold;
+  margin-inline: auto;
+  margin-top: 20%;
+  text-align: center;
+  width: 60%;
+}
+
+.postsLine {
+  color: white;
+  opacity: 1;
+}
+
+.postsTitle {
+  color: black;
+  margin: 20px 0 0 20px;
+}
+
 .Parent {
-  width: 100vw;
-  height: calc(100vh - 60px);
   background: linear-gradient(
     45deg,
     rgba(0, 0, 255, 0.308),
     rgba(128, 0, 128, 0.308) 70%
   );
   display: grid;
+  height: calc(100vh - 60px);
+  overflow: hidden;
   grid-template-columns: 1fr 2fr 1fr;
   grid-template-rows: 1fr;
   grid-column-gap: 0px;
   grid-row-gap: 0px;
-  overflow: hidden;
+  width: 100vw;
 }
 
 .Profile {
-  width: 200px;
-  height: 200px;
   display: flex;
   flex-direction: column;
-  margin-inline: auto;
   height: 40%;
-}
-
-.Profile img {
-  grid-area: 1 / 1 / 2 / 2;
-  width: 200px;
-  height: 200px;
-  display: flex;
-  flex-direction: column;
   margin-inline: auto;
-  margin-top: 50px;
-  border-radius: 50%;
-  object-fit: cover;
-  box-shadow: 0px 12px 8px 0px rgba(34, 60, 80, 0.2);
+  width: 200px;
 }
 
 .ProfileImage {
-  position: absolute;
-  margin-inline: auto;
-  height: 50px;
-  width: 50px;
-  border-radius: 50%;
-  background-color: gray;
-  display: none;
-  justify-content: center;
   align-items: center;
+  background-color: gray;
+  border-radius: 50%;
+  cursor: pointer;
+  display: none;
   font-weight: bold;
   font-size: 35px;
+  height: 50px;
+  justify-content: center;
+  margin-inline: auto;
   margin-top: 50px;
-  cursor: pointer;
+  position: absolute;
+  width: 50px;
 }
 
-.Profile img:hover + .ProfileImage {
+.image:hover + .ProfileImage {
   display: flex;
 }
 
@@ -61,117 +169,65 @@
 }
 
 .ProfileButtons {
-  display: flex;
-  flex-direction: row;
-  width: 80%;
-  margin-top: 50px;
-  justify-content: space-around;
   background-color: rgba(236, 236, 236, 0.404);
   border-radius: 10px;
-  margin-inline: auto;
+  display: flex;
+  flex-direction: row;
   height: 5%;
+  justify-content: space-around;
+  margin-inline: auto;
+  margin-top: 50px;
+  width: 80%;
 }
 
-.Buttons {
+.photoIcon {
+  color: black;
+  margin-right: 5px;
+}
+
+.searchButton {
   background-color: transparent;
   border: none;
-  display: flex;
+  margin-right: 20px;
+  margin-top: -5px;
+}
+
+.titleOnline {
   color: black;
-  align-items: center;
-  font-size: 24px;
-  text-decoration: none;
-}
-
-.Feed {
-  grid-area: 1 / 2 / 2 / 3;
-  border: solid rgba(255, 255, 255, 0.5);
-  border-width: 0 3px 0 3px;
-}
-
-.Feed button {
-  background-color: transparent;
-  margin: 10px;
-  border: none;
-  font-size: 30px;
-  margin-bottom: 100;
-}
-
-.NewsFeed {
-  height: 82vh;
-  overflow-y: scroll;
-}
-
-.FriendsOnline {
-  grid-area: 1 / 3 / 2 / 4;
-  color: white;
-}
-
-.Friends {
-  height: 45%;
-}
-
-.ListFriends {
-  margin-bottom: 100px;
-}
-
-.NoFriends {
-  width: 100%;
-  font-weight: bold;
-  display: flex;
-  justify-content: center;
-  margin-top: 20%;
-  background-color: rgba(255, 255, 255, 0.418);
-  width: 60%;
-  margin-inline: auto;
-  border-radius: 10px;
-}
-
-.NoPostsText {
-  background-color: rgba(255, 255, 255, 0.418);
-  margin-top: 30%;
-  text-align: center;
-  font-weight: bold;
-  width: 60%;
-  margin-inline: auto;
-  height: 40px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  font-size: 22px;
-  border-radius: 10px;
-}
-
-.NoFriendsText {
-  color: black;
-  text-align: center;
-  margin-top: 20%;
-  background-color: rgba(255, 255, 255, 0.418);
-  width: 60%;
-  margin-inline: auto;
-  border-radius: 10px;
-  font-weight: bold;
+  margin-top: 20px;
+  margin-left: 20px;
 }
 
 .UserName {
+  color: white;
   display: flex;
+  font-size: 24px;
   justify-content: center;
-  width: 50%;
   margin-inline: auto;
   margin-top: 5px;
-  font-size: 24px;
   text-decoration: none;
-  color: white;
+  width: 50%;
 }
 
 @media (max-width: 1000px) {
   .Profile {
     height: 200px;
   }
-  .Profile img {
-    width: 150px;
+  .image {
     height: 150px;
+    width: 150px;
   }
   .Parent {
-    grid-template-columns: 1fr 2fr 0.5fr;
+    grid-template-columns: 1fr 2fr;
+  }
+  .FriendsOnline {
+    display: none;
+  }
+}
+
+@media (max-width: 500px) {
+  .Parent {
+    display: block;
+    overflow-y: auto;
   }
 }

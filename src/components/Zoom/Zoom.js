@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from 'react';
-import styles from './Zoom.module.css';
+
 import {
   AiOutlineClose,
   AiFillCaretLeft,
   AiFillCaretRight,
 } from 'react-icons/ai';
+
+import styles from './Zoom.module.css';
 
 export default function ZoomImages(props) {
   const [position, setPosition] = useState({
@@ -14,7 +16,7 @@ export default function ZoomImages(props) {
   const [index, setIndex] = useState(0);
 
   const updatePosition = (event) => {
-    const { pageX, pageY, clientX, clientY } = event;
+    const { clientX, clientY } = event;
 
     setPosition({
       clientX,
@@ -53,12 +55,7 @@ export default function ZoomImages(props) {
   return (
     <div className={styles.Parent}>
       <header className={styles.Header} onClick={props.closeZoom}>
-        <AiOutlineClose
-          style={{
-            color: 'white',
-            fontSize: 30,
-          }}
-        />
+        <AiOutlineClose className={styles.icons} />
       </header>
       <div className={styles.ImageBox}>
         <div
@@ -71,21 +68,21 @@ export default function ZoomImages(props) {
         >
           {position.clientX < window.innerWidth / 2 ? (
             <AiFillCaretLeft
-              style={{ color: 'white', fontSize: 40 }}
+              className={styles.icons}
               onClick={() => goLeft()}
             />
           ) : (
             <AiFillCaretRight
-              style={{ color: 'white', fontSize: 40 }}
+              className={styles.icons}
               onClick={() => goRight()}
             />
           )}
         </div>
-        <img src={props.images[index]} alt='' />
+        <img className={styles.zoomedImage} src={props.images[index]} alt='' />
       </div>
-      <div style={{ color: 'white', marginBottom: 20, fontWeight: 'bold' }}>{`${
-        index + 1
-      } / ${props.images.length}`}</div>
+      <div className={styles.imageNumber}>{`${index + 1} / ${
+        props.images.length
+      }`}</div>
     </div>
   );
 }

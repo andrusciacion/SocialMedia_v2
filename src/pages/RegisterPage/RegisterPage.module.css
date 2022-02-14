@@ -1,86 +1,101 @@
-.Parent {
-  width: 100vw;
-  height: 100vh;
-  background: linear-gradient(
-    45deg,
-    rgba(0, 0, 255, 0.692),
-    rgba(128, 0, 128, 0.692) 70%
-  );
-  display: flex;
-  justify-content: space-around;
-  overflow-y: auto;
+.button {
+  box-shadow: 0px 0px 8px 6px rgba(34, 60, 80, 0.3);
+  border-radius: 10px;
+  border: none;
+  cursor: pointer;
+  font-size: 20px;
+  margin-top: 30px;
+  margin-inline: auto;
+  padding: 5px;
+  width: 50%;
 }
 
-.Parent img {
-  width: 50%;
-  display: flex;
+.button:active {
+  box-shadow: none;
 }
 
 .CreateForm {
   margin-top: 50px;
 }
 
-.CreateForm form {
+.errorMessage {
+  align-self: center;
+  background-color: rgba(255, 255, 255, 0.5);
+  border-radius: 10px;
+  color: rgb(220, 0, 0);
+  margin-top: 10px;
+  text-align: center;
+  width: 70%;
+}
+
+.form {
   display: flex;
   flex-direction: column;
 }
 
-.CreateForm label {
-  font-size: 20px;
+.image {
+  display: flex;
+  width: 50%;
+}
+
+.input {
+  background-color: rgba(255, 255, 255, 0.8);
+  box-shadow: 0px 0px 8px 5px rgba(34, 60, 80, 0.3);
+  border-radius: 5px;
+  border: none;
+  font-size: 16px;
+  padding: 5px;
+}
+
+.input:focus {
+  box-shadow: 0px 0px 8px 5px rgba(34, 60, 80, 0.1);
+  outline: none;
+}
+
+.label {
   color: white;
+  font-size: 20px;
   margin-top: 10px;
   margin-bottom: 2px;
   padding-left: 1px;
 }
 
-.CreateForm input {
-  font-size: 16px;
-  padding: 5px;
-  border-radius: 5px;
-  border: none;
-  background-color: rgba(255, 255, 255, 0.8);
-  box-shadow: 0px 0px 8px 5px rgba(34, 60, 80, 0.3);
-}
-
-.CreateForm input:focus {
-  outline: none;
-  box-shadow: 0px 0px 8px 5px rgba(34, 60, 80, 0.1);
-}
-
-.CreateForm button {
-  margin-top: 30px;
-  font-size: 20px;
-  padding: 5px;
-  width: 50%;
-  margin-inline: auto;
-  border-radius: 10px;
-  border: none;
-  box-shadow: 0px 0px 8px 6px rgba(34, 60, 80, 0.3);
-  cursor: pointer;
-}
-
-.CreateForm button:active {
-  box-shadow: none;
-}
-
-.CreateForm h1 {
-  color: white;
-}
-
 .LogIn {
-  display: flex;
-  /* flex-direction: column; */
-  justify-content: center;
-  color: white;
-  font-size: 16px;
   align-items: center;
+  color: white;
+  display: flex;
+  font-size: 16px;
+  justify-content: center;
   margin-top: 15px;
   padding-bottom: 100px;
 }
 
-.LogIn a {
+.list {
+  background-color: rgba(255, 255, 255, 0.5);
+  border-radius: 10px;
+  margin-top: 10px;
+}
+
+.link {
   color: white;
   font-weight: bold;
+}
+
+.Parent {
+  background: linear-gradient(
+    45deg,
+    rgba(0, 0, 255, 0.692),
+    rgba(128, 0, 128, 0.692) 70%
+  );
+  display: flex;
+  height: 100vh;
+  justify-content: space-around;
+  overflow-y: auto;
+  width: 100vw;
+}
+
+.title {
+  color: white;
 }
 
 @media (max-width: 600px) {
