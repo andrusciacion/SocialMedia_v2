@@ -1,13 +1,14 @@
 import React, { useEffect, useState } from 'react';
-import styles from './Feed.module.css';
+
 import NoImage from '../../images/NoImage.png';
+
+import styles from './Feed.module.css';
 
 export default function Feed(props) {
   const [rows, setRows] = useState(1);
   const [userImage, setUserImage] = useState(NoImage);
 
   useEffect(() => {
-    console.log(props);
     setRows(props.post.split(/\r\n|\r|\n/).length);
     props.user.image !== undefined
       ? setUserImage(props.user.image)
@@ -16,9 +17,9 @@ export default function Feed(props) {
 
   return (
     <div className={styles.Parent}>
-      <header>
-        <img src={userImage} alt='Image' />
-        <div>
+      <header className={styles.feedHeader}>
+        <img className={styles.userImage} src={userImage} alt='' />
+        <div className={styles.feedInformation}>
           <p className={styles.UserName}>
             {props.user.firstName + ' ' + props.user.lastName}
           </p>

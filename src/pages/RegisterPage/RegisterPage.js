@@ -1,7 +1,9 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
-import styles from './RegisterPage.module.css';
+
 import CreateImage from '../../images/CreateAccount.svg';
+
+import styles from './RegisterPage.module.css';
 
 const URL_REGISTER = 'http://localhost:3002/register';
 const URL_DATA = 'http://localhost:3004/users_data';
@@ -25,9 +27,9 @@ export default function RegisterPage() {
 
   const navigation = useNavigate();
 
-  useEffect(() => {
-    navigation('/home', { replace: true });
-  }, []);
+  // useEffect(() => {
+  //   navigation('/home', { replace: true });
+  // }, []);
 
   const handleInput = (input) => {
     let value = input.target.value;
@@ -158,26 +160,35 @@ export default function RegisterPage() {
   return (
     <div className={styles.Parent}>
       <div className={styles.CreateForm}>
-        <h1>Create new account</h1>
-        <form onSubmit={registerUser}>
-          <label htmlFor='first-name'>First Name</label>
+        <h1 className={styles.title}>Create new account</h1>
+        <form className={styles.form} onSubmit={registerUser}>
+          <label className={styles.label} htmlFor='first-name'>
+            First Name
+          </label>
           <input
+            className={styles.input}
             type='text'
             name='first-name'
             placeholder='First Name'
             onChange={handleInput}
             required
           />
-          <label htmlFor='last-name'>Last Name</label>
+          <label className={styles.label} htmlFor='last-name'>
+            Last Name
+          </label>
           <input
+            className={styles.input}
             type='text'
             name='last-name'
             placeholder='Last Name'
             onChange={handleInput}
             required
           />
-          <label htmlFor='birth'>Date of birth</label>
+          <label className={styles.label} htmlFor='birth'>
+            Date of birth
+          </label>
           <input
+            className={styles.input}
             type='date'
             name='birth'
             style={
@@ -188,8 +199,11 @@ export default function RegisterPage() {
             onChange={handleInput}
             required
           />
-          <label htmlFor='email'>Email</label>
+          <label className={styles.label} htmlFor='email'>
+            Email
+          </label>
           <input
+            className={styles.input}
             type='email'
             name='email'
             placeholder='Email'
@@ -201,8 +215,11 @@ export default function RegisterPage() {
             onChange={handleInput}
             required
           />
-          <label htmlFor='password'>Password</label>
+          <label className={styles.label} htmlFor='password'>
+            Password
+          </label>
           <input
+            className={styles.input}
             type='password'
             name='password'
             placeholder='Password'
@@ -214,21 +231,18 @@ export default function RegisterPage() {
             onChange={handleInput}
             required
           />
-          <label htmlFor='re-password'>Retype Password</label>
+          <label className={styles.label} htmlFor='re-password'>
+            Retype Password
+          </label>
           <input
+            className={styles.input}
             type='password'
             name='re-password'
             placeholder='Retype Password'
             onChange={handleInput}
             required
           />
-          <ul
-            style={{
-              backgroundColor: 'rgba(255,255,255,0.5)',
-              borderRadius: 10,
-              marginTop: 10,
-            }}
-          >
+          <ul className={styles.list}>
             <li
               style={
                 passwordCheck.upper
@@ -267,40 +281,24 @@ export default function RegisterPage() {
             </li>
           </ul>
           <p
-            style={{
-              marginTop: 10,
-              color: 'rgb(220,0,0)',
-              backgroundColor: 'rgba(255,255,255,0.5)',
-              width: '70%',
-              alignSelf: 'center',
-              borderRadius: 10,
-              textAlign: 'center',
-            }}
+            className={styles.errorMessage}
             hidden={errMessage.date === true && errMessage.password === true}
           >
             Check for correct data input
           </p>
-          <p
-            style={{
-              marginTop: 10,
-              color: 'rgb(220,0,0)',
-              backgroundColor: 'rgba(255,255,255,0.5)',
-              width: '70%',
-              alignSelf: 'center',
-              borderRadius: 10,
-              textAlign: 'center',
-            }}
-            hidden={errMessage.email === true}
-          >
+          <p className={styles.errorMessage} hidden={errMessage.email === true}>
             {requestError}
           </p>
-          <button>Create</button>
+          <button className={styles.button}>Create</button>
         </form>
         <div className={styles.LogIn}>
-          or if you have an account&ensp; <Link to='/'>Log in</Link>
+          or if you have an account&ensp;{' '}
+          <Link className={styles.link} to='/'>
+            Log in
+          </Link>
         </div>
       </div>
-      <img src={CreateImage} alt='' />
+      <img className={styles.image} src={CreateImage} alt='' />
     </div>
   );
 }

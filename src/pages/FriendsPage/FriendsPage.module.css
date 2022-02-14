@@ -1,33 +1,15 @@
-.Parent {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  background: linear-gradient(
-    45deg,
-    rgba(0, 0, 255, 0.308),
-    rgba(128, 0, 128, 0.308) 70%
-  );
-  height: calc(100vh - 60px);
-  /* overflow: hidden; */
-}
-
-.Title {
-  border: none;
-  width: 100%;
-  text-align: center;
-  margin-top: 20px;
-  font-size: 26px;
-  font-weight: bold;
-  box-shadow: 0px 5px 8px -1px rgba(34, 60, 80, 0.5);
-  padding-block: 10px;
-  z-index: 1;
+.friendCard {
+  color: black;
+  height: 250px;
+  text-decoration: none;
+  width: 200px;
 }
 
 .FriendsGallery {
+  display: grid;
+  height: 90%;
   margin-left: 20px;
   margin-top: 50px;
-  height: 90%;
-  display: grid;
   grid-template-columns: repeat(6, 1fr);
   grid-template-rows: repeat(1, 1fr);
   grid-column-gap: 20px;
@@ -35,22 +17,54 @@
 }
 
 .Friend {
-  display: flex;
-  flex-direction: column;
-  width: 200px;
-  height: 250px;
   box-shadow: 0px 0px 8px 4px rgba(34, 60, 80, 0.5);
-  padding: 10px;
   border-radius: 10px;
   cursor: pointer;
-}
-
-.Friend h6 {
-  width: 100%;
-  text-align: center;
-  margin-top: 10%;
+  display: flex;
+  flex-direction: column;
+  height: 250px;
+  padding: 10px;
+  width: 200px;
 }
 
 .Friend:hover {
   box-shadow: 0px 0px 8px 4px rgba(34, 60, 80, 0.2);
+}
+
+.image {
+  border-radius: 50%;
+  display: flex;
+  height: 80%;
+  object-fit: cover;
+  width: 100%;
+}
+
+.Parent {
+  align-items: center;
+  background: linear-gradient(
+    45deg,
+    rgba(0, 0, 255, 0.308),
+    rgba(128, 0, 128, 0.308) 70%
+  );
+  display: flex;
+  flex-direction: column;
+  height: calc(100vh - 60px);
+}
+
+.Title {
+  box-shadow: 0px 5px 8px -1px rgba(34, 60, 80, 0.5);
+  border: none;
+  font-weight: bold;
+  font-size: 26px;
+  margin-top: 20px;
+  padding-block: 10px;
+  text-align: center;
+  width: 100%;
+  z-index: 1;
+}
+
+.userName {
+  margin-top: 10%;
+  text-align: center;
+  width: 100%;
 }

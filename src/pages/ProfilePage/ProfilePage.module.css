@@ -1,57 +1,120 @@
-.Parent {
-  width: 100%;
-  height: 140%;
-  background: linear-gradient(
-    45deg,
-    rgba(0, 0, 255, 0.308),
-    rgba(128, 0, 128, 0.308) 70%
-  );
+.addPostsIcon {
+  color: white;
+  cursor: pointer;
+  font-size: 30px;
+  margin-top: 10px;
 }
 
-.WelcomeSection {
-  height: 23%;
+.addPostTitle {
+  margin-block: auto;
+  margin-top: 15px;
+  margin-left: 10px;
+}
+
+.addNewPostHeader {
+  align-items: center;
   display: flex;
   justify-content: center;
 }
 
 .BackgroundImage {
-  width: 100%;
+  box-shadow: 0px 10px 8px 8px rgba(34, 60, 80, 0.5);
   object-fit: cover;
   opacity: 0.8;
-  box-shadow: 0px 10px 8px 8px rgba(34, 60, 80, 0.5);
+  width: 100%;
   z-index: -1;
 }
 
-.ProfileImage {
-  margin-top: 3%;
-  width: 200px;
-  height: 200px;
-  border-radius: 50%;
-  position: absolute;
-  object-fit: cover;
+.ButtonPost {
+  border: none;
+  font-size: 40px;
+  height: 40px;
+  margin: 0;
+  padding: 0;
+  width: 40px;
 }
 
-.UserName {
-  margin-top: 2%;
-  margin-bottom: 1%;
-  font-size: 24px;
-  font-weight: bold;
-  text-align: center;
+.deleteButton {
+  cursor: pointer;
+  font-size: 30px;
+  position: absolute;
+  margin-left: 69%;
+  margin-top: 10px;
+}
+
+.headerLine {
   color: white;
+  margin-top: 30px;
+  margin-inline: auto;
+  width: 100%;
+}
+
+.image {
+  height: 300px;
+  margin-inline: auto;
+  object-fit: cover;
+  width: 250px;
+  box-shadow: 0px 0px 8px 5px rgba(34, 60, 80, 0.5);
+  border-radius: 10px;
+}
+
+.NoPostsText {
+  align-items: center;
+  background-color: rgba(255, 255, 255, 0.418);
+  border-radius: 10px;
+  display: flex;
+  font-weight: bold;
+  font-size: 22px;
+  height: 40px;
+  justify-content: center;
+  margin-top: 20%;
+  margin-inline: auto;
+  text-align: center;
+  width: 60%;
+}
+
+.Parent {
+  background: linear-gradient(
+    45deg,
+    rgba(0, 0, 255, 0.308),
+    rgba(128, 0, 128, 0.308) 70%
+  );
+  height: 140%;
+  width: 100%;
+}
+
+.postsTitle {
+  text-align: center;
+  width: 100%;
+}
+
+.ProfileImage {
+  border-radius: 50%;
+  height: 200px;
+  margin-top: 3%;
+  object-fit: cover;
+  position: absolute;
+  width: 200px;
 }
 
 .PostsArea {
-  height: 57%;
   background-color: rgba(128, 128, 128, 0.253);
+  border-radius: 30px;
   display: grid;
   grid-template-columns: 1.5fr 1fr;
   grid-template-rows: 1fr;
   grid-column-gap: 0px;
   grid-row-gap: 0px;
-  border-radius: 30px;
-  width: 98%;
+  height: 57%;
   margin-inline: auto;
   overflow: hidden;
+  width: 98%;
+}
+
+.postContainer {
+  justify-content: flex-end;
+  margin-inline: auto;
+  width: 80%;
 }
 
 .PostsList {
@@ -61,55 +124,90 @@
   padding-bottom: 50px;
 }
 
-.ButtonPost {
-  border: none;
-  padding: 0;
-  margin: 0;
-  width: 40px;
-  height: 40px;
-  font-size: 40px;
+.postsHeader {
+  align-items: center;
+  display: flex;
+  justify-content: space-around;
+  margin-bottom: -10px;
+  width: 90%;
 }
 
 .PhotosButton {
+  align-items: center;
+  color: black;
+  display: flex;
+  margin-top: 10px;
+  text-decoration: none;
   visibility: hidden;
 }
 
 .Photos {
-  margin-top: 10px;
-  width: 90%;
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   grid-template-rows: repeat(2, 1fr);
   grid-column-gap: 10px;
   grid-row-gap: 10px;
-  margin-inline: auto;
   margin-bottom: 100px;
+  margin-inline: auto;
+  margin-top: 10px;
+  width: 100%;
+}
+
+.photosLinkStyle {
+  border-radius: 10px;
+  color: black;
+  cursor: pointer;
+  font-size: 30px;
+  font-weight: bold;
+  margin-left: 20px;
+  padding: 5px;
+  text-shadow: 2px 2px rgba(0, 0, 0, 0.3);
+  text-decoration: none;
+  width: 100%;
+}
+
+.photosLinkButton {
+  height: 30px;
+}
+
+.photosScrollBars {
+  height: 100%;
+}
+
+.photosIcon {
+  color: white;
+  cursor: pointer;
+  font-size: 30px;
+}
+
+.photosTitle {
+  margin-block: auto;
+  margin-left: 10px;
 }
 
 .PhotosContainer {
-  margin-top: 10px;
+  width: 50vw;
 }
 
-.Photos img {
-  width: 250px;
-  height: 300px;
-  object-fit: cover;
-  margin-inline: auto;
-}
-
-.NoPostsText {
-  background-color: rgba(255, 255, 255, 0.418);
-  margin-top: 20%;
-  text-align: center;
+.UserName {
+  color: white;
   font-weight: bold;
-  width: 60%;
-  margin-inline: auto;
-  height: 40px;
+  font-size: 24px;
+  margin-top: 2%;
+  margin-bottom: 1%;
+  text-align: center;
+}
+
+.WelcomeSection {
   display: flex;
+  height: 23%;
   justify-content: center;
-  align-items: center;
-  font-size: 22px;
-  border-radius: 10px;
+}
+
+@media (max-width: 1100px) {
+  .Photos {
+    grid-template-columns: repeat(1, 1fr);
+  }
 }
 
 @media (max-width: 800px) {

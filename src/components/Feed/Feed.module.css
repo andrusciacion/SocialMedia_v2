@@ -1,62 +1,59 @@
-.Parent {
-  background-color: rgba(255, 255, 255, 0.486);
-  width: 90%;
-  margin-inline: auto;
-  margin-top: 20px;
-  border-radius: 10px;
-  box-shadow: 0px 5px 8px 8px rgba(34, 60, 80, 0.2);
+.DateTime {
+  font-size: 12px;
+  font-weight: lighter;
+  margin: 0;
 }
 
-.Parent header div {
-  height: 100%;
+.Feed {
+  background-color: transparent;
+  border-bottom-left-radius: 10px;
+  border-bottom-right-radius: 10px;
+  border: none;
+  cursor: default;
+  display: flex;
+  overflow: hidden;
+  outline: none;
+  padding-left: 30px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  width: 100%;
+}
+
+.feedHeader {
+  align-items: center;
+  border: solid white;
+  border-width: 0 0 2px 0;
+  display: flex;
+  flex-direction: row;
+  padding-left: 10px;
+}
+
+.feedInformation {
   display: flex;
   flex-direction: column;
+  height: 100%;
   justify-content: center;
 }
 
-.Parent header p,
-.Parent header h6 {
-  margin: 0;
+.Parent {
+  background-color: rgba(255, 255, 255, 0.486);
+  border-radius: 10px;
+  box-shadow: 0px 5px 8px 8px rgba(34, 60, 80, 0.2);
+  margin-inline: auto;
+  margin-top: 20px;
+  width: 90%;
 }
 
 .UserName {
   font-weight: bold;
   font-size: 17px;
+  margin: 0;
 }
 
-.DateTime {
-  font-size: 12px;
-  font-weight: lighter;
-}
-
-.Parent img {
+.userImage {
   background-color: black;
   border-radius: 50%;
-  width: 50px;
   height: 50px;
   margin: 5px;
-}
-
-.Parent header {
-  padding-left: 10px;
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  border: solid white;
-  border-width: 0 0 2px 0;
-}
-
-.Feed {
-  display: flex;
-  padding-left: 30px;
-  padding-top: 10px;
-  padding-bottom: 10px;
-  width: 100%;
-  border: none;
-  overflow: hidden;
-  border-bottom-left-radius: 10px;
-  border-bottom-right-radius: 10px;
-  background-color: transparent;
-  outline: none;
-  cursor: default;
+  width: 50px;
 }

@@ -1,15 +1,17 @@
 import React, { useEffect, useState } from 'react';
-import styles from './HomePage.module.css';
-import NoImage from '../../images/NoImage.png';
-import { Link, useNavigate } from 'react-router-dom';
+import { Scrollbars } from 'react-custom-scrollbars-2';
 import { BsPlusCircle, BsSearch } from 'react-icons/bs';
 import { MdPhotoSizeSelectActual } from 'react-icons/md';
-import { Scrollbars } from 'react-custom-scrollbars-2';
+import { Link, useNavigate } from 'react-router-dom';
 import { useFilePicker } from 'use-file-picker';
-import Navigation from '../../components/NavigationBar/NavigationBar';
-import SearchModal from '../../components/SearchModal';
+
 import Feed from '../../components/Feed/Feed';
 import Friends from '../../components/Friends/Friends';
+import Navigation from '../../components/NavigationBar/NavigationBar';
+import NoImage from '../../images/NoImage.png';
+import SearchModal from '../../components/Search/SearchModal';
+
+import styles from './HomePage.module.css';
 
 const URL_REQUEST = 'http://localhost:3004/';
 
@@ -22,7 +24,6 @@ export default function HomePage() {
   });
   const [onlineFriends, setOnlineFriends] = useState([]);
   const [friends, setFriends] = useState([]);
-  const [selectedImage, setSelectedImage] = useState('');
   const [show, setShow] = useState(false);
   const [allUsers, setAllUsers] = useState([]);
 
@@ -31,10 +32,6 @@ export default function HomePage() {
   useEffect(() => {
     getUserData();
   }, []);
-
-  // useEffect(() => {
-  //   getUser();
-  // }, [selectedImage, show]);
 
   const getUserData = () => {
     resetState();
@@ -70,9 +67,8 @@ export default function HomePage() {
     );
 
   const sortPosts = (posts) => {
-    console.log(posts);
     let newArray = [];
-    posts.map((item) => {
+    posts.forEach((item) => {
       item.posts.forEach((second) =>
         newArray.push({
           post: second.post,
@@ -103,7 +99,7 @@ export default function HomePage() {
   const setImage = (image) => {
     let imagesArray = [...user.images];
     imagesArray.unshift(image);
-    fetch(URL_REQUEST + `users_data/${user.id}`, {
+    let request = fetch(URL_REQUEST + `users_data/${user.id}`, {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
@@ -113,7 +109,7 @@ export default function HomePage() {
         images: imagesArray,
       }),
     });
-    getUserData();
+    Promise.all([request]).then(() => getUserData());
   };
 
   const showModal = () => {
@@ -154,32 +150,20 @@ export default function HomePage() {
         user={user}
       />
       <div className={styles.Parent}>
-        <button
-          style={{
-            position: 'absolute',
-            left: 'calc(50% - 75px)',
-            width: 150,
-            marginTop: 60,
-            border: 'none',
-            borderRadius: 10,
-            padding: 5,
-            fontWeight: 'bold',
-            backgroundColor: 'white',
-            boxShadow: '0px 0px 5px 8px rgba(34, 60, 80, 0.2)',
-            visibility: posts.postExist ? 'visible' : 'hidden',
-          }}
-        >
-          New posts...
-        </button>
+        {posts.postExist && (
+          <button className={styles.newPostsButton}>New posts...</button>
+        )}
+
         <div>
           <div className={styles.Profile}>
             <img
+              className={styles.image}
               src={
                 user.images !== undefined && user.images.length > 0
                   ? user.images[0]
                   : NoImage
               }
-              alt='Image'
+              alt=''
             />
             <div className={styles.ProfileImage}>
               <PickImage setImage={(image) => setImage(image)} />
@@ -192,51 +176,29 @@ export default function HomePage() {
           </div>
           <div className={styles.ProfileButtons}>
             <Link to='/photos' className={styles.Buttons} state={user}>
-              <MdPhotoSizeSelectActual
-                style={{ color: 'black', marginRight: 5 }}
-              />
+              <MdPhotoSizeSelectActual className={styles.photoIcon} />
               Photos
             </Link>
           </div>
-          <hr style={{ color: 'white', height: 3 }} />
-          <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-            <Link
-              to='/friends'
-              state={user.friends}
-              style={{ textDecoration: 'none' }}
-            >
-              <h3
-                style={{
-                  marginLeft: 20,
-                  color: 'black',
-                  textShadow: '2px 2px rgba(0,0,0,0.2)',
-                }}
-              >
-                Friends
-              </h3>
+          <hr className={styles.postsLine} />
+          <div className={styles.friendsHeader}>
+            <Link className={styles.link} to='/friends' state={user.friends}>
+              <h3 className={styles.friendsTitle}>Friends</h3>
             </Link>
 
-            <button
-              style={{
-                backgroundColor: 'transparent',
-                border: 'none',
-                marginTop: -5,
-                marginRight: 20,
-              }}
-              onClick={showModal}
-            >
+            <button className={styles.searchButton} onClick={showModal}>
               <BsSearch />
             </button>
           </div>
 
           <div className={styles.Friends}>
-            <Scrollbars>
+            <Scrollbars style={{ height: 200 }}>
               <div className={styles.ListFriends}>
                 {friends &&
                   friends.map((item, key) => (
                     <Link
                       to='/profile'
-                      style={{ textDecoration: 'none' }}
+                      className={styles.link}
                       state={item.id}
                       key={key}
                     >
@@ -253,19 +215,10 @@ export default function HomePage() {
         </div>
 
         <div className={styles.Feed}>
-          <h3
-            style={{
-              marginTop: 20,
-              marginLeft: 20,
-              marginBottom: 0,
-              color: 'black',
-            }}
-          >
-            Posts from friends
-          </h3>
-          <hr style={{ color: 'white', height: 2 }} />
+          <h3 className={styles.postsTitle}>Posts from friends</h3>
+          <hr className={styles.postsLine} />
 
-          <Scrollbars style={{ height: '80vh' }}>
+          <Scrollbars style={{ height: '79vh' }}>
             {posts.friendsPosts &&
               posts.friendsPosts.map((item, key) => (
                 <Feed
@@ -287,15 +240,15 @@ export default function HomePage() {
         </div>
         <div className={styles.FriendsOnline}>
           <div className={styles.Ads}>{/* <Ads /> */}</div>
-          <hr style={{ height: 3, color: 'white' }} />
-          <h3 style={{ marginLeft: 20, color: 'black' }}>Online</h3>
-          <div style={{ height: 330 }} className={styles.Friends}>
+          <h3 className={styles.titleOnline}>Online</h3>
+          <div className={styles.Friends}>
             <div className={styles.ListFriends}>
               {onlineFriends &&
                 onlineFriends.map((item, key) => (
                   <Link
+                    className={styles.link}
+                    key={key}
                     to='/profile'
-                    style={{ textDecoration: 'none' }}
                     state={item.id}
                   >
                     <Friends
@@ -320,17 +273,16 @@ export default function HomePage() {
 }
 
 function PickImage(props) {
-  const [openFileSelector, { filesContent, loading, errors }] = useFilePicker({
+  const [openFileSelector, { filesContent, errors }] = useFilePicker({
     readAs: 'DataURL',
     accept: 'image/*',
     multiple: false,
     limitFilesConfig: { max: 2 },
-    // minFileSize: 1,
-    maxFileSize: 10, // in megabytes
+    maxFileSize: 10,
   });
 
   useEffect(() => {
-    filesContent.map((file) => {
+    filesContent.forEach((file) => {
       props.setImage(file.content);
     });
   }, [filesContent]);

@@ -1,8 +1,9 @@
 import React from 'react';
-import styles from './Unauthorized.module.css';
-import Unauthorized from '../../images/Unauthorized.svg';
-import Login_unauthorized from '../../images/Login_unauthorized.svg';
 import { useNavigate } from 'react-router-dom';
+
+import Unauthorized from '../../images/Unauthorized.svg';
+
+import styles from './UnauthorizedPage.module.css';
 
 export default function UnauthorizedPage() {
   let navigate = useNavigate();
@@ -15,7 +16,9 @@ export default function UnauthorizedPage() {
       <div className={styles.loginArea}>
         <div>
           <div> If you want to continue, please</div>
-          <button onClick={toLogin}>Login</button>
+          <button className={styles.button} onClick={toLogin}>
+            Login
+          </button>
         </div>
       </div>
       <img src={Unauthorized} alt='' />
