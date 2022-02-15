@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
 import { Button, Modal } from 'react-bootstrap';
+import { Link } from 'react-router-dom';
 
-import { TiSocialFlickrCircular } from 'react-icons/ti';
 import { FiLogOut } from 'react-icons/fi';
+import { TiSocialFlickrCircular } from 'react-icons/ti';
 
-import styles from './Navigation.module.css';
+import styles from './NavigationBar.module.css';
 
 export default function NavigationBar(props) {
   const [showModal, setShowModal] = useState(false);

@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import Scrollbars from 'react-custom-scrollbars-2';
-import { Link, useLocation, useNavigate } from 'react-router-dom';
-import { MdPhotoSizeSelectActual, MdDeleteSweep } from 'react-icons/md';
 import { AiFillPlusCircle } from 'react-icons/ai';
+import { MdPhotoSizeSelectActual, MdDeleteSweep } from 'react-icons/md';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 
+import Feed from '../../components/Feed/Feed';
 import Navigation from '../../components/NavigationBar/NavigationBar';
 import PostModal from '../../components/Post/PostModal';
 import NoImage from '../../images/NoImage.png';
-import Feed from '../../components/Feed/Feed';
 
 import styles from './ProfilePage.module.css';
 
