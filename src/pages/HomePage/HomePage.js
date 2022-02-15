@@ -8,8 +8,8 @@ import { useFilePicker } from 'use-file-picker';
 import Feed from '../../components/Feed/Feed';
 import Friends from '../../components/Friends/Friends';
 import Navigation from '../../components/NavigationBar/NavigationBar';
-import NoImage from '../../images/NoImage.png';
 import SearchModal from '../../components/Search/SearchModal';
+import NoImage from '../../images/NoImage.png';
 
 import styles from './HomePage.module.css';
 
